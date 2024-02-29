@@ -30,3 +30,10 @@
 0:0:0:0:0:0:0:1 - - [27/Feb/2024:17:38:46 +0900] "POST /servlet/life HTTP/1.1" 200 19
 0:0:0:0:0:0:0:1 - - [27/Feb/2024:17:38:57 +0900] "GET /servlet/pkg02_request/NewFile.html HTTP/1.1" 200 420
 0:0:0:0:0:0:0:1 - - [27/Feb/2024:17:38:59 +0900] "GET /servlet/request?number=10&number2=1.5 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Feb/2024:21:04:55 +0900] "GET / HTTP/1.1" 404 808
+0:0:0:0:0:0:0:1 - - [27/Feb/2024:21:04:56 +0900] "GET /servlet/pkg02_request/NewFile.html HTTP/1.1" 200 410
+0:0:0:0:0:0:0:1 - - [27/Feb/2024:21:04:56 +0900] "GET /favicon.ico HTTP/1.1" 404 819
+0:0:0:0:0:0:0:1 - - [27/Feb/2024:21:04:58 +0900] "GET /servlet/request?number=10&number2=1.5 HTTP/1.1" 200 -
+0:0:0:0:0:0:0:1 - - [27/Feb/2024:21:05:10 +0900] "GET /servlet/pkg01_lifecycle/NewFile.html HTTP/1.1" 200 313
+0:0:0:0:0:0:0:1 - - [27/Feb/2024:21:05:12 +0900] "POST /servlet/life HTTP/1.1" 200 19
+0:0:0:0:0:0:0:1 - - [27/Feb/2024:21:05:15 +0900] "GET /servlet/life HTTP/1.1" 200 19

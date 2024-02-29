@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>request</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- <a> 태그 요청 -->
+  <div>
+    <a id="link" data-number="10" data-number2="1.5">요청</a>
+  </div>
+  <script>
+    var link = document.getElementById('link');
+    link.href = '/servlet/request?number=' + link.dataset.number + '&number2= ' + link.dataset.number2;
+  </script>
+  
+  <!-- 자바스크립트 : location 객체를 이용한 요청 -->
+  <div data-number="10">
+    <button type="button" id="btn" data-number2="1.5">요청</button>
+  </div>
+  <script>
+    // 클릭 이벤트 - 로케이션 이용한 이동 - 데이터 빼오기
+    // 제이쿼리 이용하기
+    $('#btn').on('click', function(evt){
+    	location.href = '/servlet/request?number=' + dataset.number + '&number2= ' + dataset.number2;
+    	
+    })
+  </script>
+
+</body>
+</html>
