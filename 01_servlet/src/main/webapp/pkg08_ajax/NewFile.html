@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ajax</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div>
+    <button type="button" id="btn1">정보가져오기</button>
+  </div>
+  <table border="1">
+    <tbody id="contents1"></tbody>
+  </table>
+  
+  <script>
+  
+    // XML 데이터 요청 -> 화면에 표시하기
+  
+    const getData1 = ()=> {
+    	
+    	const options = {
+    			method: 'GET'
+    	}
+    	
+    	fetch('/servlet/getData1', options)
+    	
+    	/* .then((response)=>{
+    		 if(response.ok){
+    			 return response.text();
+    		 }
+    	 }) */
+    	 .then(response => response.text()) // fetch 메소드가 반환한 Promise 객체의 then 메소드를 호출하여, 서버로부터 받은 응답(response)을 텍스트 형식으로 변환
+    	 .then(resData=>{
+    		 
+    		 // String 타입 resData를 XML Document로 변경하기
+    		 const domParser = new DOMParser(); // XML 또는 HTML 문자열을 파싱하여 DOM(Document Object Model)을 생성
+    		 const xmlDoc = domParser.parseFromString(resData, 'application/xml'); //생성한 DOMParser 객체를 사용하여 resData를 XML 형식의 문자열로 파싱하여 xmlDoc에 저장
+    		 
+    		 // <tbody id="contents1"></tbody>
+    		 const contents1 = document.getElementById('contents1');
+    		 
+    		 // <weather year="2024" month="03" day="04" hour="10"">
+    		 const weather = xmlDoc.getElementsByTagName('weather')[0];  // 태그가 여러개니 배열로
+    		 contents1.innerHTML = '';  // contents1 요소의 내용을 초기화
+    		 contents1.innerHTML += '<tr><td colspan="3">' 
+    			                    + weather.getAttribute('year') + '-' 
+    			                    + weather.getAttribute('month') + '-'
+    			                    + weather.getAttribute('day') + '&nbsp;'
+    			                    + weather.getAttribute('hour') + '시</td></tr>';
+    			                   
+    		 // <local desc="맑음" ta="4.5">지역 이름</local> 배열
+    		 const locals = xmlDoc.getElementsByTagName('local'); //태그 이름이 'local'인 요소들을 가져와서 locals 변수에 저장
+    		 for(let i = 0; i < locals.length; i++){
+    			 let str = '<tr>';
+    			 str += '<td>' + locals[i].textContent + '</td>';
+    			 str += '<td>' + locals[i].getAttribute('desc') + '</td>';
+    			 str += '<td>' + locals[i].getAttribute('ta') + '</td>';
+    	     str += '</tr>';
+    	     contents1.innerHTML += str;
+    		 }
+    		 
+    	 })
+    
+    }
+    
+    document.getElementById('btn1').addEventListener('click', getData1);
+  
+  </script>
+  
+  <hr>
+  
+  <div>
+    <button type="button" id="btn2">정보가져오기</button>
+  </div>
+  <table border="1">
+    <thead>
+	    <tr>
+		    <td>발생일시</td>
+		    <td>사망자수</td>
+		    <td>부상자수</td>
+	    </tr>
+    </thead>
+    <tbody id="contents2"></tbody>
+  </table>
+  
+  <script>
+    
+    const getData2 = () => {
+    	$.ajax({
+    		
+    		/* 요청 */
+    		type: 'get',
+    		url: '/servlet/getData2',
+    		
+    		/* 응답 */
+    		dataType: 'json'
+
+    	})
+    	.done((resData)=>{
+    		/* $.each(배열, 함수(인덱스,요소){}) */
+    		$.each(resData.items.item, (i, elem) => {
+	    			let str = '<tr>';
+	    			str += '<td>' + elem.occrrnc_dt + '</td>';
+	    			str += '<td>' + elem.dth_dnv_cnt + '</td>';
+	    			str += '<td>' + elem.injpsn_cnt + '</td>';
+	    			str += '</tr>';
+	    			$('#contents2').append(str);
+    		})
+    	})
+    	.fail((jqXHR)=>{
+    		console.log(jqXHR.responseText + '(' + jqXHR.status + ')');   // .status : http 오류 번호 를 출력 (500, 404 등)
+    	})//          ------------------
+    }   //        url의 response full text를 출력
+  
+    	$('#btn2').on('click', getData2);
+
+  </script>
+
+
+</body>
+</html>

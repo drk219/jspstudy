@@ -16,7 +16,7 @@ public class ReadCookie extends HttpServlet {
   
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
   
-    // 쿠키 가져오기 (요청 : 클라이언트가 쿠키를 가지고 있다.)
+    // 쿠키 가져오기 (요청 : 클라이언트의 브라우저가 쿠키를 가지고 있다.)
     Cookie[] cookies = request.getCookies();
     
     // 응답
@@ -57,11 +57,12 @@ public class ReadCookie extends HttpServlet {
     }
     
     out.println("<script>");
-    out.println("let btnDelete=document.getElementsByClassName('btn-delete');");
-    out.println("for(let i=0; i < btnDelete.length; i++){");
+    out.println("let btnDelete=document.getElementsByClassName('btn-delete');"); 
+    out.println("for(let i=0; i < btnDelete.length; i++){");              // 삭제 버튼에 인덱스를 달아주는 작업
     out.println("  btnDelete[i].addEventListener('click', (evt)=>{");
     out.println("    if(confirm('삭제할까요?')){");
     out.println("      location.href=`" + request.getContextPath() + "/deleteCookie?cookieName=${evt.target.dataset.cookieName}`;");
+                                       //          /servlet
     out.println("    }");        
     out.println("  });");
     out.println("}");

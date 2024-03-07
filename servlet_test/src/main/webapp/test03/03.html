@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>test03</title>
+</head>
+<body>
+
+  <div>
+    <select>
+      <option id="time">현재시간</option>
+      <option id="date">현재날짜</option>
+    </select>
+    <button id="btn">요청하기</button>
+  </div>
+  
+  <script>
+  
+  document.getElementById('btn').addEventListener('click', function(evt){
+	  if(document.getElementById('time')){
+		  alert('현재시간은');
+	  }
+	  if(document.getElementById('date')){
+		  alert('현재날짜는');
+	  }
+  });
+  
+  </script>
+
+</body>
+</html>

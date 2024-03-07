@@ -1,12 +1,14 @@
 package pkg01_lifecycle;
 
+import java.io.IOException;
+
+import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /*
  * Servlet
@@ -25,11 +27,13 @@ import java.io.IOException;
  * 
  * 1. 형식
  *    protocol://host:port/contextPath/URLMapping
+ *    
  * 2. contextPath
  *    1) 프로젝트 경로를 의미한다.
  *    2) 프로젝트를 생성할 때 결정한다.
  *    3) 프로젝트 속성(Properties)에서 변경할 수 있다.
  *      프로젝트 우클릭 - 속성 - Web Project Settings
+ *      
  * 3. URLMapping
  *    1) 프로젝트 내부 경로를 의미한다.
  *    2) Servlet을 생성할 때 결정한다.
@@ -77,6 +81,7 @@ public class LifeCycle extends HttpServlet {
    * 4. service() 메소드가 없으면 doGet() 또는 doPost() 메소드가 요청에 따라 호출된다.
    */
   protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
     System.out.println("service() 메소드 호출");
     switch(request.getMethod()) {
     case "GET": 
@@ -85,6 +90,7 @@ public class LifeCycle extends HttpServlet {
     case "POST": 
       doPost(request, response);
       break;
+      
     }
   }
 
@@ -105,8 +111,10 @@ public class LifeCycle extends HttpServlet {
    *      })
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
     System.out.println("doGet() 메소드 호출");
     response.getWriter().append("Served at: ").append(request.getContextPath());
+    
   }
 
   /**
@@ -123,8 +131,10 @@ public class LifeCycle extends HttpServlet {
    *      })
    */
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
     System.out.println("doPost() 메소드 호출");
     doGet(request, response);
+    
   }
 
 }

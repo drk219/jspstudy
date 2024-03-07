@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>test04</title>
+</head>
+<body>
+
+  <form id="frm"
+        action="/test/test04" 
+        method="post">
+    <div>
+      <label for="writer">작성자</label>
+      <input type="text" id="writer" name="writer">
+    </div>
+    <div>
+      <label for="title">제목</label>
+      <input type="text" id="title" name="title">
+    </div>
+    <div>
+      <textarea rows="5" cols="50" name="contents" placeholder="내용"></textarea>
+    </div>
+    <div>
+      <button type="submit" id="send">작성완료</button>
+      <button type="reset" id="reset">작성초기화</button>
+    </div>
+  </form>
+  
+  <script>
+  
+  document.getElementById('send').addEventListener('click', function(event) {
+      alert('txt파일이름..?');
+  });
+
+  </script>
+
+
+</body>
+</html>
