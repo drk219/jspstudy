@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /*
- * view - controller - service - dao - db
+ * view - (filter) - controller - service - dao - db
  */
 
 public class BoardController extends HttpServlet {
@@ -25,12 +25,11 @@ public class BoardController extends HttpServlet {
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	 
-	  // 요청 인코딩
-	  request.setCharacterEncoding("UTF-8");
+
 	  
 	  // 요청 주소 확인
-	  String requestURI = request.getRequestURI();  /* http://localhost:8080/dbcp/board/list.brd */
-	  String contextPath = request.getContextPath(); /*/dbcp */
+	  String requestURI = request.getRequestURI();   /* http://localhost:8080/dbcp/board/list.brd */  // 첫화면은 목록화면 보기
+	  String contextPath = request.getContextPath(); /* /dbcp */
 	  String urlMapping = requestURI.substring(requestURI.indexOf(contextPath) + contextPath.length());
 	  
 	  // 서비스 메소드 호출 결과를 저장할 ActionForward 객체 선언
@@ -52,6 +51,18 @@ public class BoardController extends HttpServlet {
       break;
     case "/board/detail.brd":
       actionForward = boardService.getBoardByNo(request);
+      break;
+    case "/board/edit.brd":
+      actionForward = boardService.editBoard(request);
+      break;
+    case "/board/modify.brd":
+      actionForward = boardService.modifyBoard(request);
+      break;
+    case "/board/remove.brd":
+      actionForward = boardService.removeBoard(request);
+      break;
+    case "/board/removes.brd":
+      actionForward = boardService.removeBoards(request);
       break;
 	  }
 	  

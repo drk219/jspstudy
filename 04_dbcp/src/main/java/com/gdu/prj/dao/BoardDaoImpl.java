@@ -15,27 +15,8 @@ import javax.sql.DataSource;
 import com.gdu.prj.dto.BoardDto;
 
 /*
- * view - controller - service - dao - db
+ * view - (filter) - controller - service - dao - db
  */
-
-//UserApp 동작 흐름 (자바에서 했던 내용들)
-/*
-*    < UserApp >           < UserController >                                    < UserService >                               < UserDao >
-*   
-*   작업 선택       ->
-*   View 실행 결과  -> 
-*                      String requestHandle(작업 선택, View 실행 결과) {
-*                        작업에 따른 서비스 호출(View 실행 결과 전달)    -> 
-*   작업결과메시지  <-   작업결과메시지 반환
-*   확인               }
-*                                                                            반환타입 선택된메소드(View 실행 결과) {
-*                                                                              DAO 메소드 호출(View 실행 결과)         ->
-*                                                                        <-    반환값 반환         
-*                                                                            }
-*                                                                                                                         반환타입 선택된메소드(View 실행 결과) {
-*                                                                                                                           DB 처리
-*                                                                                                                      <-   반환값 반환
-*/
 
 public class BoardDaoImpl implements BoardDao {
   
@@ -53,13 +34,13 @@ public class BoardDaoImpl implements BoardDao {
     // META-INFO\context.xml 파일에 명시된 자원(resource)를 이용해 DataSource 객체 생성
     try {
       Context context = new InitialContext();
-      Context env = (Context)context.lookup("java:comp/env");   // 읽어드릴떄 필요한 네이밍
+      Context env = (Context)context.lookup("java:comp/env");   // 읽어드릴때 필요한 네이밍
       dataSource = (DataSource)env.lookup("jdbc/myoracle");
     } catch (NamingException e) {
       System.out.println("관련 자원을 찾을 수 없습니다.");
     }
   }
-  public static BoardDao getInstance() {
+  public static BoardDao getInstance() {  // 프라이빗 처리한 BoardDaoImpl을 다른 곳에서 사용할 수 있게 getInstance으로 따로 만들어준다. 
     return boardDao;
   }
 
@@ -76,7 +57,7 @@ public class BoardDaoImpl implements BoardDao {
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
-      close();   // this.close();
+      close();   // this.close(); 사용 가능
     }
     return insertCount;
   }
@@ -86,11 +67,11 @@ public class BoardDaoImpl implements BoardDao {
     int updateCount = 0;
     try {
       con = dataSource.getConnection();
-      String sql = "UPDATE BOARD_T SET TITLE = ?, CONTENTS = ?, MODIFIED_AT = CURRENT_TIME WHERE BOARD_NO = ?";
+      String sql = "UPDATE BOARD_T SET TITLE = ?, CONTENTS = ?, MODIFIED_AT = CURRENT_DATE WHERE BOARD_NO = ?";
       ps = con.prepareStatement(sql);
       ps.setString(1, board.getTitle());
       ps.setString(2, board.getContents());
-      ps.setInt(2, board.getBoard_no());
+      ps.setInt(3, board.getBoard_no());
       updateCount = ps.executeUpdate();
     } catch (Exception e) {
       e.printStackTrace();
@@ -116,6 +97,22 @@ public class BoardDaoImpl implements BoardDao {
     }
     return deleteCount;
   }
+  
+  @Override
+  public int deleteBoards(String param) {
+    int deleteCount = 0;
+    try {
+      con = dataSource.getConnection();
+      String sql = "DELETE FROM BOARD_T WHERE BOARD_NO IN(" + param + ")";
+      ps = con.prepareStatement(sql);
+      deleteCount = ps.executeUpdate();
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+     close();
+    }
+      return deleteCount;
+  }
 
   @Override
   public List<BoardDto> selectBoardList(Map<String, Object> map) {
@@ -124,8 +121,8 @@ public class BoardDaoImpl implements BoardDao {
       con = dataSource.getConnection();
       String sql = "SELECT BOARD_NO, TITLE, CONTENTS, MODIFIED_AT, CREATED_AT FROM BOARD_T ORDER BY BOARD_NO DESC";
       ps = con.prepareStatement(sql);
-      rs = ps.executeQuery();
-      while(rs.next()) {
+      rs = ps.executeQuery();   // select 는 rs 로 실행 
+      while(rs.next()) {        
         BoardDto board = BoardDto.builder()
                                  .board_no(rs.getInt(1))
                                  .title(rs.getString(2))
