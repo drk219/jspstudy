@@ -12,7 +12,10 @@
 </head>
 <body>
 
-  <div></div>
+  <!-- 게시판으로 가는 링크 -->
+  <div>
+    <a href="${contextPath}/board/list.brd">게시판</a>
+  </div>
 
 </body>
 </html>
