@@ -20,7 +20,7 @@ public class BoardServiceImpl implements BoardService {
   private BoardDao boardDao = BoardDaoImpl.getInstance();  // 접근할 수 있는 getInstance로 호출
   
   @Override
-  public ActionForward addBoard(HttpServletRequest request) {
+  public ActionForward addBoard(HttpServletRequest request) {  // 게시글 추가 서비스
     String title = request.getParameter("title");
     String contents = request.getParameter("contents");
     BoardDto board = BoardDto.builder()
@@ -42,7 +42,7 @@ public class BoardServiceImpl implements BoardService {
   }
 
   @Override
-  public ActionForward getBoardList(HttpServletRequest request) {
+  public ActionForward getBoardList(HttpServletRequest request) {  // 게시글 목록 가져오기 서비스
     int boardCount = boardDao.getBoardCount();
     List<BoardDto> boardList = boardDao.selectBoardList(null);
     request.setAttribute("boardCount", boardCount);
@@ -51,7 +51,7 @@ public class BoardServiceImpl implements BoardService {
   }
 
   @Override
-  public ActionForward getBoardByNo(HttpServletRequest request) {
+  public ActionForward getBoardByNo(HttpServletRequest request) {  // 게시글 번호로 상세보기 서비스
     Optional<String> opt = Optional.ofNullable(request.getParameter("board_no"));
     int board_no = Integer.parseInt(opt.orElse("0"));
     BoardDto board = boardDao.selectBoardByNo(board_no);
@@ -66,7 +66,7 @@ public class BoardServiceImpl implements BoardService {
   }
 
   @Override
-  public ActionForward editBoard(HttpServletRequest request) {    // select 결과를 가져오기
+  public ActionForward editBoard(HttpServletRequest request) {    // 게시글 수정 서비스
     String param = request.getParameter("board_no");
     int board_no = 0;
     if(!param.isEmpty()) {   // 빈 문자열이 아니라면
@@ -96,7 +96,7 @@ public class BoardServiceImpl implements BoardService {
     int updateCount = boardDao.updateBoard(board);
     String view = null;
     if(updateCount == 0) {
-      view = request.getContextPath() + "/main.brd";   
+      view = request.getContextPath() + "/main.brd";  
     } else {
       view = request.getContextPath() + "/board/detail.brd?board_no=" + board_no;
     }
@@ -104,7 +104,7 @@ public class BoardServiceImpl implements BoardService {
   }
 
   @Override
-  public ActionForward removeBoard(HttpServletRequest request) {
+  public ActionForward removeBoard(HttpServletRequest request) {   // 게시글 한개 삭제 서비스
     String param = request.getParameter("board_no");
     int board_no = 0;
     if(!param.isEmpty()) {
@@ -121,7 +121,7 @@ public class BoardServiceImpl implements BoardService {
   }
   
   @Override
-  public ActionForward removeBoards(HttpServletRequest request) {
+  public ActionForward removeBoards(HttpServletRequest request) {   // 게시글 여러개 삭제 서비스 
     String param = request.getParameter("param");
     int deleteCount = boardDao.deleteBoards(param);
     String view = null;
