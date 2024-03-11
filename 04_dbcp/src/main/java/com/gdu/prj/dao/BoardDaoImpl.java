@@ -116,12 +116,17 @@ public class BoardDaoImpl implements BoardDao {
   }
 
   @Override
-  public List<BoardDto> selectBoardList(Map<String, Object> map) {   // 게시글 번호 내림차순 (1, 2, 3, 4, 5....)으로 목록보기
+  public List<BoardDto> selectBoardList(Map<String, Object> params) {   // 게시글 번호 내림차순 (1, 2, 3, 4, 5....)으로 목록보기
     List<BoardDto> boardList = new ArrayList<>();
     try {
       con = dataSource.getConnection();
-      String sql = "SELECT BOARD_NO, TITLE, CONTENTS, MODIFIED_AT, CREATED_AT FROM BOARD_T ORDER BY BOARD_NO DESC";
+      String sql = "SELECT BOARD_NO, TITLE, CONTENTS, MODIFIED_AT, CREATED_AT"
+                 + "  FROM (SELECT ROW_NUMBER() OVER (ORDER BY BOARD_NO " + params.get("sort") + ") AS RN, BOARD_NO, TITLE, CONTENTS, MODIFIED_AT, CREATED_AT"
+                 + "          FROM BOARD_T) "
+                 + " WHERE RN BETWEEN ? AND ?";
       ps = con.prepareStatement(sql);
+      ps.setInt(1, (int)params.get("begin"));  // params 는 object 이기 떄문에 int 로 바꿔줘야한다.
+      ps.setInt(2, (int)params.get("end"));
       rs = ps.executeQuery();   // select 절은 rs 로 실행 
       while(rs.next()) {        
         BoardDto board = BoardDto.builder()                // 데이터베이스로부터 읽어온 각각의 레코드에 대한 정보를 담고 있다

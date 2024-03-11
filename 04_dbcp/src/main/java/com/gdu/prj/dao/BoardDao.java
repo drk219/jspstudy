@@ -15,7 +15,7 @@ public interface BoardDao {
   int updateBoard(BoardDto board);                          // 수정하기로 한 행의 개수가 0 이면 실패
   int deleteBoard(int board_no);                            // 삭제할 게시글의 번호를 int 로 삭제 가능
   int deleteBoards(String param);                           // 삭제할 게시글의 번호를 문자열로 받아 삭제 가능 
-  List<BoardDto> selectBoardList(Map<String, Object> map);  // 게시판의 ## ~ ##까지 목록을 가져온다
+  List<BoardDto> selectBoardList(Map<String, Object> params);  // 게시판의 ## ~ ##까지 목록을 가져온다
   int getBoardCount();                                      // 모든 게시글의 개수
   BoardDto selectBoardByNo(int board_no);                   // 게시글 번호로 해당 게시글 상세보기
   
