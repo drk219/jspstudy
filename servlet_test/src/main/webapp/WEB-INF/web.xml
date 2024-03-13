@@ -21,16 +21,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>test04</display-name>
-    <servlet-name>test04</servlet-name>
-    <servlet-class>test04.test04</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>test04</servlet-name>
-    <url-pattern>/test04</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>test02</display-name>
     <servlet-name>test02</servlet-name>
     <servlet-class>test02.test02</servlet-class>
@@ -48,5 +38,15 @@
   <servlet-mapping>
     <servlet-name>test03</servlet-name>
     <url-pattern>/test03</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>test04</display-name>
+    <servlet-name>test04</servlet-name>
+    <servlet-class>test04.test04</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>test04</servlet-name>
+    <url-pattern>/test04</url-pattern>
   </servlet-mapping>
 </web-app>

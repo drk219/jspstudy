@@ -3,35 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <title>test02</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
 
-  
-  <button type="reset" id="reset">새로고침</button>
   <div>
-  <div id="div1"></div>
-  <input type="text" id="answer" name="answer">
-  <button type="button" id="check">계산</button>
-  </div>
-  
-  <style>
-    #div1 {
-      width: 50px;
-      height: 10px;
-    }
-    #answer {
-      width: 30px;
-    }
-  </style>
+    <form method="post" action="/test/test02">
+		  <div>
+		    <button type="button" id="reset">새로고침</button>
+		  </div>
+      <span id="span-dan"></span>
+      <span>X</span>
+      <span id="span-num"></span>
+      <span>=</span>
+      <input type="text"   id="result"     name="result" size="4">
+      <input type="hidden" id="hidden-dan" name="dan">
+      <input type="hidden" id="hidden-num" name="num">
+      <button type="submit">계산</button>
+    </form>
+  </div>  
   
   <script>
-
-    function multiple(){
-      document.getElementById('check').addEventListener('click', function(){
-    	  
-      })
-    }
-    multiple();
+  
+  function multiple() {
+	  
+	  var dan = parseInt(Math.random() * 8) + 2; // 2-9단 랜덤
+		var num = parseInt(Math.random() * 9) + 1; // 1-9 랜덤
+		document.getElementById('span-dan').textContent = dan;
+		document.getElementById('span-num').textContent = num;
+		document.getElementById('hidden-dan').value = dan;
+		document.getElementById('hidden-num').value = num;
+		$('#result').val('').focus();
+	}
+  
+  multiple();
+  
+  document.getElementById('reset').addEventListener('click', multiple);
+  
   </script>
 
 

@@ -7,25 +7,14 @@
 <body>
 
   <div>
-    <select>
-      <option id="time">현재시간</option>
-      <option id="date">현재날짜</option>
-    </select>
-    <button id="btn">요청하기</button>
+    <form method="get" action="/test/test03">
+	    <select name="type">
+	      <option value="1">현재날짜</option>
+	      <option value="2">현재시간</option>
+	    </select>
+	    <button id="btn" type="submit">요청하기</button>
+    </form>
   </div>
-  
-  <script>
-  
-  document.getElementById('btn').addEventListener('click', function(evt){
-	  if(document.getElementById('time')){
-		  alert('현재시간은');
-	  }
-	  if(document.getElementById('date')){
-		  alert('현재날짜는');
-	  }
-  });
-  
-  </script>
 
 </body>
 </html>

@@ -8,64 +8,80 @@
 
 <form method="post"
       action="/test/test01"  
-      id="frm">
+      id="frm-register">
 
   <div>
     <label for="id">아이디</label><br>
-    <input type="text" id="id" name="id">@naver.com
+    <input type="text" id="id" name="id"><span>@naver.com</span>
   </div>
+  
   <div>
     <label for="pw">비밀번호</label><br>
     <input type="password" id="pw" name="pw">
   </div>
+  
   <div>
     <label for="check-pw">비밀번호 재확인</label><br>
     <input type="password" id="check-pw" name="check-pw">
   </div>
+  
   <div>
     <label for="name">이름</label><br>
     <input type="text" id="name" name="name">
   </div>
+  
   <div>
     <label for="birth">생년월일</label><br>
-    <input type="text" id="year" name="year" placeholder="년(4자)">
+    <input type="text" id="birth" name="year" placeholder="년(4자)">
     <select name="month">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-      <option>6</option>
-      <option>7</option>
-      <option>8</option>
-      <option>9</option>
-      <option>10</option>
-      <option>11</option>
-      <option>12</option>
+      <option value="">월</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
     </select>
-    <input type="text" id="day" name="day" placeholder="일">
+    <input type="text" name="day" placeholder="일">
   </div>
+  
   <div>
   <label for="gender">성별</label><br>
-    <select name='gender'>
-      <option value="man" id="man">남</option>
-      <option value="woman" id="woman">여</option>
+    <select name='gender' id="gender">
+      <option value="">성별</option>
+      <option value="man">남</option>
+      <option value="woman">여</option>
+      <option value="none">선택 안함</option>
     </select>
   </div>
+  
   <div>
     <label for="email">본인 확인 이메일(선택)</label><br>
-    <input type="text" placeholder="선택입력">
+    <input type="text" name="email" id="email" placeholder="선택입력">
   </div>
+  
   <div>
-  <label for="phone">휴대전화</label><br>
-  <select>
-    <option>대한민국 +82</option>
-    <option>일본</option>
-    <option>중국</option>
-  </select><br>
-  <input type="text" placeholder="전회번호입력"><button type="submit">인증번호받기</button><br>
-  <input type="text" placeholder="인증번호 입력하세요"> 
-  </div><br>
+	  <label for="tel">휴대전화</label><br>
+	  <div>
+		  <select name="country">
+		    <option value="+82" selected="selected">대한민국 +82</option>
+		    <option value="+12">일본 +12</option>
+		    <option value="+34">중국 +34</option>
+		  </select>
+	  </div>
+	  <input type="text" name="tel" id="tel" placeholder="전화번호 입력" size="10">
+	  <input type="button" value="인증번호 받기">
+	  <div>
+	    <input type="text" placeholder="인증번호 입력하세요" disabled>
+	  </div>
+  </div>
+  
   <div>
     <button type="submit">가입하기</button>
   </div>
@@ -74,41 +90,23 @@
   
   <script>
 
-    function fnValidPw(){
-      
-      var inpPw = document.getElementById('pw').value;
-      var length = inpPw.length;
-      var passCount = /[A-Z]/.test(inpPw)          
-                    + /[a-z]/.test(inpPw)          
-                    + /[0-9]/.test(inpPw)          
-                    + /[^0-9A-Za-z]/.test(inpPw);
-                    
-      return length >= 8 && length <= 16 && passCount >= 3;
-    }
-
-    function fnValidPwCheck(){
-
-      var inpPw = document.getElementById('pw').value;
-      var inpPwCheck = document.getElementById('check-pw').value;
-      return inpPw.length != 0 && inpPw === inpPwCheck;
-    }
-
-    
-    document.getElementById('frm').addEventListener('submit', function(evt) {
-
-      validPw = fnValidPw();
-      validPwCheck = fnValidPwCheck();
-
-      if(document.getElementById('id') === "") {
+  document.querySelector('form').addEventListener("submit", (evt) => {
+	  
+      let id = document.querySelector('#id');
+      if(id.value === '') {
         alert('아이디는 필수입니다.');
-        evt.preventDefault();    
+        event.preventDefault();
         return;
-      } else if(!validPw || !validPwCheck) {
+      }
+      
+      let pw = document.querySelector('#pw');
+      let pw2 = document.querySelector('#check-pw');
+      if(pw.value !== pw2.value) {
         alert('비밀번호를 확인하세요.');
-        evt.preventDefault();    
+        event.preventDefault();
         return;
-      } 
-    })
+      }
+    });
   
   </script>
 

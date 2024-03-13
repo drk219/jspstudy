@@ -6,31 +6,44 @@
 </head>
 <body>
 
-  <form id="frm"
-        action="/test/test04" 
-        method="post">
-    <div>
-      <label for="writer">작성자</label>
-      <input type="text" id="writer" name="writer">
-    </div>
-    <div>
-      <label for="title">제목</label>
-      <input type="text" id="title" name="title">
-    </div>
-    <div>
-      <textarea rows="5" cols="50" name="contents" placeholder="내용"></textarea>
-    </div>
-    <div>
-      <button type="submit" id="send">작성완료</button>
-      <button type="reset" id="reset">작성초기화</button>
-    </div>
-  </form>
+  <div>
+    <form id="frm"
+          action="/test/test04" 
+          method="post">
+      <div>
+        <label for="writer">작성자</label>
+        <input type="text" id="writer" name="writer">
+      </div>
+      <div>
+        <label for="title">제목</label>
+        <input type="text" id="title" name="title">
+      </div>
+      <div>
+        <textarea rows="5" cols="30" name="contents" placeholder="내용"></textarea>
+      </div>
+      <div>
+        <button type="submit" id="send">작성완료</button>
+        <button type="reset" id="reset">작성초기화</button>
+      </div>
+    </form>
+  </div>
   
   <script>
   
-  document.getElementById('send').addEventListener('click', function(event) {
-      alert('txt파일이름..?');
-  });
+  function evt() {
+    
+    let frm = document.getElementById('frm');
+    let writer = document.getElementById('writer');
+    let title = document.getElementById('title');
+    
+    frm.addEventListener('submit', (evt)=>{
+      if(writer.value === '' || title.value === ''){        
+        alert('작성자와 제목은 필수입니다.');
+        evt.preventDefault();
+        return;
+      }
+    })
+  }
 
   </script>
 
