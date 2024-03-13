@@ -29,7 +29,7 @@ public class BoardDaoImpl implements BoardDao {
       e.printStackTrace();
     }
   }
-  private static BoardDao getInstance() {
+  public static BoardDao getInstance() {
     return boardDao;
   }
 
