@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,6 +41,7 @@
   <c:forEach var="seasons" items="${seasons}" varStatus="vs">
     <div>${seasons} / ${vs.index} / ${vs.count}</div>      <%-- 계절 / 인덱스번호 / 순번 --%>
   </c:forEach>
+  <div>${fn:length(seasons)}</div>
   
   <hr>
   

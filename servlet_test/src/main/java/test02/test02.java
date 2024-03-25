@@ -16,8 +16,8 @@ public class test02 extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	  
-	  // 2-9까지 2개의 난수를 가져와서 구구단 만들기
-	  // 랜덤문제 만들어서 html화면에 출력해서
+	  // 2-9단 & 1-9난수를 가져와서 구구단 만들기
+	  // 랜덤문제 만들어서 화면에 출력해서
 	  // 텍스트 상자에 답과 맞으면 정답 alert, 틀리면 오답 alert
 	  
 	  request.setCharacterEncoding("UTF-8");
